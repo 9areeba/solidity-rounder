@@ -24,14 +24,14 @@ contract('Contract Test', function (accounts) { //accunts has a list of accounts
 
 
         it('Should set the deployer to owner', async function () {
-            let result = await testContract.owner();
+            let result = await testContract.owner(); //jsut a global variable so that's why result is not a transaction value.
             assert.equal(result, deployer);
             
         });
 
         it('Should change the address of the owner to newOwner', async function () {
             let newOwner = accounts[3]; //using the address of accounts[3]
-            let result1 = await testContract.ChangeOwner(newOwner);
+            let result1 = await testContract.ChangeOwner(newOwner); //This is the value of the transaction
             let result = await testContract.owner();
             assert.equal(result, newOwner);
         });

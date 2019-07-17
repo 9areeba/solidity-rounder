@@ -2,15 +2,21 @@ pragma solidity ^0.5.10;
 
 contract Rounder {
 
+    //public variables allows them to have their on getter function
     address public owner;
-    uint public gran;
+    uint public granularity;
     uint public output;
 
     constructor() public {
         owner = msg.sender;
-        gran = 5;
+        granularity = 0;
+    }
+
+    function setGranularity(uint num) public {
+        granularity = num;
 
     }
+
 
     function returnInput(uint256 input) public pure returns (uint256) {
         return input;
@@ -25,15 +31,16 @@ contract Rounder {
     function round(uint number) public returns(uint) {
         uint remainder;
 
-        remainder = number % gran;
+        remainder = number % granularity;
         if (remainder == 0) {
             output = number;
         } else {
-            output = number + (gran - remainder);
+            output = number + (granularity - remainder);
         }
-        
+
         return output;
     }
+
 
 
 

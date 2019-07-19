@@ -9,10 +9,16 @@ contract Rounder {
 
     constructor() public {
         owner = msg.sender;
-        granularity = 0;
+        granularity = 5;
     }
 
-    function setGranularity(uint num) public {
+    modifier Owner() {
+        //This statement needs to be fufilled or else the error message is displayed
+        require(msg.sender == owner, "You need to be the owner to change granularity");
+        _; //Allows the rest of the code in the function to be run if the condiition is met
+    }
+    
+    function setGranularity(uint num) public Owner() {
         granularity = num;
 
     }

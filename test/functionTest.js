@@ -1,5 +1,9 @@
 
+//Importing truffleAssert
+const truffleAssert = require('truffle-assertions');
+
 //artifacts.require() teling the test to use the contract "Rounder"
+//When importing other contracts, they are usaully sotred in artifacts folder.
 const rounder = artifacts.require('Rounder'); 
 
 //contract() gives a list of accounts to use within the tests 
@@ -44,10 +48,24 @@ contract('Contract Test', function (accounts) { //accunts has a list of accounts
 
 
         it('Should set granularity to a value mentioned by user', async function () {
-            let expectedGranularity = 5
+            let expectedGranularity = 6
             await testContract.setGranularity(expectedGranularity)
             let result = await testContract.granularity(); 
             assert.equal(result, expectedGranularity);
+        });
+
+
+        it('Should not allow the granularity to be changed', async function () {
+//            await truffleAssert.fails(
+//                testContract.setGranularity(expectedGranularity),
+//                truffleAssert.ErrorType.REVERT,
+//                "Only the owner can set a value for granularity"
+//            );
+
+            await truffleAssert.reverts(testContract.setGranularity(
+                6, { from: accounts[3] })
+            );
+
         });
 
 

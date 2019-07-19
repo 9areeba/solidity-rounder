@@ -17,19 +17,12 @@ contract('Contract Test', function (accounts) { //accunts has a list of accounts
         //beforeEach test this function is run
         beforeEach(async function () {
             //a new version of contract is deployed to allow tests to be run on a clean contract
-            testContract = await rounder.new( 
+            testContract = await rounder.new(accounts[2], accounts[3],
 
                 {
                     //from account[0]
-                    from: deployer                }
+                    from: deployer             }
             );
-        });
-
-
-        it('Should return the input', async function () {
-            expectedOutput = 15;
-            let tx = await testContract.returnInput(expectedOutput); //using the functin retrunInput from the Rounder contract
-            assert.equal(tx, expectedOutput);
         });
 
 
@@ -56,12 +49,6 @@ contract('Contract Test', function (accounts) { //accunts has a list of accounts
 
 
         it('Should not allow the granularity to be changed', async function () {
-//            await truffleAssert.fails(
-//                testContract.setGranularity(expectedGranularity),
-//                truffleAssert.ErrorType.REVERT,
-//                "Only the owner can set a value for granularity"
-//            );
-
             await truffleAssert.reverts(testContract.setGranularity(
                 6, { from: accounts[3] })
             );

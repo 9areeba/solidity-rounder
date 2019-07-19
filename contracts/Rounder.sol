@@ -6,11 +6,16 @@ contract Rounder {
     address public owner;
     uint public granularity;
     uint public output;
+    mapping(address => uint) public balance;
+    
 
-    constructor() public {
+    constructor(address account1, address account2) public {
         owner = msg.sender;
         granularity = 5;
+        balance[account1] = 50;
+        balance[account2] = 20;
     }
+
 
     modifier Owner() {
         //This statement needs to be fufilled or else the error message is displayed
@@ -22,12 +27,6 @@ contract Rounder {
         granularity = num;
 
     }
-
-
-    function returnInput(uint256 input) public pure returns (uint256) {
-        return input;
-    }
-
 
     function ChangeOwner(address owner2) public returns(address) {
         owner = owner2;
